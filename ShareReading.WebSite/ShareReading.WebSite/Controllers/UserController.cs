@@ -58,7 +58,7 @@ namespace ShareReading.WebSite.Controllers
 
                 else
                 {                               
-                        return Content("<script> alert('成功');document.location='" + Url.Action("Index", "Student") +
+                        return Content("<script> alert('成功');document.location='" + Url.Action("Index", "Home") +
                                     "'</script>");
                    
                 }
