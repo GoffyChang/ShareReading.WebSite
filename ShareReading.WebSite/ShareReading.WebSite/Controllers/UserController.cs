@@ -48,10 +48,31 @@ namespace ShareReading.WebSite.Controllers
         }
         public ActionResult Register()
         {
+            if (ModelState.IsValid)
+            {
+                if(true)//todo 检查数据库是否存在改用户名
+                {
+                    ModelState.AddModelError("doubleuser", "已被使用");
+                    return View();
+                }
+
+                else
+                {                               
+                        return Content("<script> alert('成功');document.location='" + Url.Action("Index", "Student") +
+                                    "'</script>");
+                   
+                }
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Register(UserModel user)
+        {
             return View();
         }
         public ActionResult LogOff()
         {
+            HttpContext.UserLogout();
             return RedirectToAction("Index","Home");
         }
         /// <summary>
@@ -67,4 +88,6 @@ namespace ShareReading.WebSite.Controllers
         }
 
     }
+    //todo 第三方登录暂时没有做，腾讯接入需要产品上线
+    //todo 手机或邮箱校验，跟加验证码一起做
 }

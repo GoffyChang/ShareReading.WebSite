@@ -44,7 +44,6 @@ namespace ShareReading.WebSite.Common
                 return LoginResult.WrongVerify;
             }
             var user = new UserModel();//todo 数据库查询用户根据用户登录名
-            //todo 还有一种已经被注册
             if (user == null)
             {
                 return LoginResult.NoUser;
@@ -89,6 +88,27 @@ namespace ShareReading.WebSite.Common
                 #endregion Session
                 return LoginResult.Success;
             }
+        }
+        public static void UserLogout(this HttpContextBase context)
+        {
+            #region Cookie
+            HttpCookie myCookie = context.Request.Cookies["CurrentUser"];
+            if (myCookie != null)
+            {
+                myCookie.Expires = DateTime.Now.AddMinutes(-1);//设置过过期
+                context.Response.Cookies.Add(myCookie);
+            }
+
+            #endregion Cookie
+
+            #region Session
+            var sessionUser = context.Session["CurrentUser"];
+            context.Session["CurrentUser"] = null;//表示将制定的键的值清空，并释放掉，
+            context.Session.Remove("CurrentUser");
+            context.Session.Clear();//表示将会话中所有的session的键值都清空，但是session还是依然存在，
+            context.Session.RemoveAll();//
+            context.Session.Abandon();//就是把当前Session对象删除了，下一次就是新的Session了   
+            #endregion Session
         }
     }
 }
