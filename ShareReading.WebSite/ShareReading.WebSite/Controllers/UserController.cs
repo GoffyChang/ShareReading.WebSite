@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Web.Mvc;
 using ShareReading.WebSite.Common;
+using ShareReading.WebSite.Models;
 
 namespace ShareReading.WebSite.Controllers
 {
@@ -14,26 +15,34 @@ namespace ShareReading.WebSite.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(string name, string password, string verify, bool remember)
+        public ActionResult Login(UserModel user)
         {
-            UserManage.LoginResult result = HttpContext.UserLogin(remember, name,password, verify);
-
-            if (result == UserManage.LoginResult.Success)
+            if (ModelState.IsValid)
             {
-                if (HttpContext.Session["CurrentUrl"] == null)
+                UserManage.LoginResult result = HttpContext.UserLogin(user.Remember, user.UserName, user.PassWord,"");
+
+                if (result == UserManage.LoginResult.Success)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (HttpContext.Session["CurrentUrl"] == null)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        string url = HttpContext.Session["CurrentUrl"].ToString();
+                        HttpContext.Session["CurrentUrl"] = null;
+                        return Redirect(url);
+                    }
                 }
                 else
                 {
-                    string url = HttpContext.Session["CurrentUrl"].ToString();
-                    HttpContext.Session["CurrentUrl"] = null;
-                    return Redirect(url);
+                    ModelState.AddModelError("failed", result.GetRemark());
+                    return View();
                 }
+
             }
             else
             {
-                ModelState.AddModelError("failed", result.GetRemark());
                 return View();
             }
         }

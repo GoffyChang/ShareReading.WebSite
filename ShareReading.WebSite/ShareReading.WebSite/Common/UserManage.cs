@@ -44,6 +44,7 @@ namespace ShareReading.WebSite.Common
                 return LoginResult.WrongVerify;
             }
             var user = new UserModel();//todo 数据库查询用户根据用户登录名
+            //todo 还有一种已经被注册
             if (user == null)
             {
                 return LoginResult.NoUser;
