@@ -1,0 +1,22 @@
+﻿@using ShareReading.WebSite.Models
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("你好 " + ((UserModel)Context.Session["CurrentUser"]).UserName + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = ((UserModel)Context.Session["CurrentUser"]).UserName })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">注销</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("注册", "Register", "User", null, new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("登录", "Login", "User", null, new { id = "loginLink" })</li>
+    </ul>
+}
