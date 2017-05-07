@@ -163,7 +163,6 @@
     </Compile>
     <Compile Include="Models\AjaxResult.cs" />
     <Compile Include="Models\CommonEnum.cs" />
-    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +219,20 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{12c4fba4-b3b5-4a77-8fa8-836c236c3eb0}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{959e302c-6b2e-4163-9c88-d0c2f435db86}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShareReading.Framework\ShareReading.Framework.csproj">
+      <Project>{33a30ae6-23a2-4887-ac38-ffda59e0e5e1}</Project>
+      <Name>ShareReading.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
